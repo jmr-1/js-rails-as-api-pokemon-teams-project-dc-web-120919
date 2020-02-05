@@ -29,20 +29,19 @@ function buildTrainerCard(trainer){
     let addPokemonButton = document.createElement('button');
     addPokemonButton.dataset['trainer']= trainer.id;
     addPokemonButton.innerText = 'Add Pokemon';
-    addPokemonButton.addEventListener('click', (e) => addPokemonHandler(e, trainer))
+    let pokemonList = document.createElement('ul');
+    pokemonList.dataset['trainer'] = trainer.id;
     trainerCard.appendChild(addPokemonButton);
+    trainerCard.appendChild(pokemonList);
+    addPokemonButton.addEventListener('click', (e) => addPokemonHandler(e, trainer))
     trainer.pokemons.forEach(pokemon => buildPokemon(pokemon));
-    
 }
 
-function getTrainerContainer(){
-    return document.getElementById('trainer-container')
-}
 
 function buildPokemon(pokemon){
-    let trainerCard2 = document.querySelector(`div[data-id="${pokemon.trainer_id}"]`)
-    let pokemonList = document.createElement('ul');
-    trainerCard2.appendChild(pokemonList);
+    // debugger;
+    let pokemonList = document.querySelector(`ul[data-trainer="${pokemon.trainer_id}"]`)
+    // trainerCard2.appendChild(pokemonList);
     let newLi = document.createElement('li');
     pokemonList.appendChild(newLi);
     newLi.innerText = `${pokemon.nickname} (${pokemon.species})`
@@ -52,9 +51,12 @@ function buildPokemon(pokemon){
     releaseButton.dataset['pokemon'] = pokemon.id;
     newLi.appendChild(releaseButton);
     releaseButton.addEventListener('click', (e)=> releasePokemon(e))
-
+    
 }
 
+function getTrainerContainer(){
+    return document.getElementById('trainer-container')
+}
 function releasePokemon(event){
 
     console.log('releasing pokemon');
@@ -63,7 +65,7 @@ function releasePokemon(event){
     fetch(`${POKEMONS_URL}/${pokemonID}`, {
         method: "DELETE"
     }).then(response => response.json())
-    // .then(data => console.log(data))
+    .then(data => console.log(data))
     event.target.parentElement.remove();
 }
 
