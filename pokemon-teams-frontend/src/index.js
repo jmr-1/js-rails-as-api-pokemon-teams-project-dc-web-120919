@@ -28,7 +28,7 @@ function buildTrainerCard(trainer){
     trainerCard.appendChild(trainerName);
     let addPokemonButton = document.createElement('button');
     addPokemonButton.dataset['trainer']= trainer.id;
-    addPokemonButton.innerText = 'Add Pokemon';
+    addPokemonButton.innerText = 'Catch Pokémon';
     let pokemonList = document.createElement('ul');
     pokemonList.dataset['trainer'] = trainer.id;
     trainerCard.appendChild(addPokemonButton);
